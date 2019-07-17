@@ -1,0 +1,555 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>제일펫푸드</title>	
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.65, minimum-scale=0.65, maximum-scale=1.2, user-scalable=yes">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <META NAME="ROBOTS" CONTENT="NOINDEX">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+  
+    	<meta property="og:image" content="common/img/thum.png"/>
+	<meta property="og:url" content="#"/> 
+	<meta property="og:description" content="제일펫푸드 등 안내."/> 
+	<meta property="og:title" content="제일펫푸드"/>
+    <meta name="description" content="제일펫푸드 등 안내.">
+		<meta name="naver-site-verification" content="56e96c78a98c07c1c539b5aeb64abb193e746ee4"/>
+
+	<link rel="canonical" href="#"/>
+    <link rel="shortcut icon" href="#"/>
+    <link rel="stylesheet" media="all" href="../common/css/slick.css">
+    <link rel="stylesheet" href="../common/css/jquery.bxslider.css">
+    <link rel="stylesheet" media="all" href="../common/css/reset.css">
+    <link rel="stylesheet" media="all" href="../common/css/common.css">
+    <script src="../common/js/jquery-1.11.3.min.js"></script>
+    <script src="../common/js/jquery.placeholder.enhanced-1.5.js"></script>
+    <script src="../common/js/jquery.easing.1.3.js"></script>
+    <script src="../common/js/slick.min.js"></script>
+    <script src="../common/js/jquery.bxslider.min.js"></script>
+    <script src="../common/js/common.js"></script>
+	<script src="../common/js/form.js"></script>
+    <!--[if lt IE 10]>
+        <link rel="stylesheet" media="all" href="common/css/ie9.css">
+    <![endif]-->
+    <!--[if lt IE 9]>
+        <link rel="stylesheet" media="all" href="common/css/ie.css">
+        <script src="common/html5.js"></script>
+        <script src="common/respond.js"></script>
+    <![endif]-->
+	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+	<script>
+		function openDaumPostcode() {
+			new daum.Postcode({
+				oncomplete: function(data) {
+					// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+					// 우편번호와 주소 정보를 해당 필드에 넣고, 커서를 상세주소 필드로 이동한다.
+					document.getElementById('post').value = data.zonecode;       
+					document.getElementById('address1').value = data.address;
+					document.getElementById('address2').focus();
+				}
+			}).open();
+		}
+
+		function openDaumPostcode_pop() {
+			new daum.Postcode({
+				oncomplete: function(data) {
+					// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+					// 우편번호와 주소 정보를 해당 필드에 넣고, 커서를 상세주소 필드로 이동한다.
+					document.getElementById('pop_post').value = data.zonecode;       
+					document.getElementById('pop_address1').value = data.address;
+					document.getElementById('pop_address2').focus();
+				}
+			}).open();
+		}
+	</script>
+    
+
+</head>
+
+<style>
+	.loading_area {position:fixed; width:100%; height:100%; z-index:9999;}
+	.loading_area #bg {background-color:#000; display:block; height:100%; left:0; opacity:0.5; filter:alpha(opacity=50); position:fixed; top:0; width:100%; z-index:99999999;}
+	.loading_area .loading_img { position:fixed; width: 100%; height:6px; background: #00a4ae; left:0%; top:0%;  z-index:99999;}
+	.loading_area .loading_img .bar {background: #88f8ff; width: 30%; border-radius:3px;  height:6px;  position:fixed; left:-30%; top:0%;}
+	.loading_area .loading_img.on .bar {left: 100%; top:0%; transition: all 0.5s 0s ease-in-out;}
+</style>
+<!--
+<div class="loading_area" id="loading_area" style="display:none">
+	<p class="loading_img"><img src=".././img/common/bx_loader.gif"></p>
+	<div id="bg"></div>
+</div>
+-->
+<body>
+<script>
+var searchUrl = './notice.php';
+
+function viewNotice(board_idx,board_type, page,num) {
+	
+	location.href = "./notice_view.php?board_idx="+board_idx +"&board_type="+board_type+"&page=" + page+"&b_news_yn="+"&subtitle=&searchText=&cnt=5&nownum="+num;
+}
+
+function categoryList(b_news_yn){
+
+	location.href = "./notice.php?b_news_yn="+b_news_yn;
+}
+</script>
+    <div id="viewport">		
+
+        <!-- 헤더 -->
+        <script>
+$(document).ready(function () {
+	$("#searcht").keydown(function (key) { 
+        if (key.keyCode == 13) { // 엔터키면 
+        	location.href="etc/search.php?searchText="+$('#searcht').val(); 
+        } 
+    });
+});
+	function headerSearch(){
+		
+		location.href="etc/search.php?searchText="+$('#searcht').val();
+	}
+
+	function changeclass(part){
+		if(part == 'open'){
+			$('#ativesch').attr('class','gnb_search_area active');
+		}else{
+			$('#ativesch').attr('class','gnb_search_area');
+		}
+	}
+
+</script>
+<div id="header">
+            <div class="header_top">
+                <div class="contains">
+                    <div class="right_menu">
+                        <ul class="top_menu">
+                        	<li><a href="company/location.php">CONTACT</a></li>
+                            <li><a href="center/faq.php">자주하는질문</a></li>                            
+                            <li><a href="index.php" class="active">KO</a></li>       
+                            <li><a href="en/index.php">EN</a></li>                            
+                        </ul>
+                        <div class="top_search hide_mobile">
+                        	<input id="searcht" name="searcht" value=""/><a href="javascript:headerSearch()"></a>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="header_bottom">
+                <div class="gnb_box">
+                    <div class="contains">
+                        <h1 class="logo"><a href="index.php">
+						<img src="../file/profile/sinfo/8bc4a711e24c688437b4163177a60cd8_IMG181120094759.png" alt="제일펫푸드" class="hide_mobile">
+                        <img src="../common/img/common/p.png" alt="제일펫푸드" class="show_mobile">
+						</a></h1>
+						<a href="javascript:headerSearch()" id="btn_mobile_search" class="btn_gnb_search">
+							<img src="../common/img/icon/header_search.png" alt="검색">
+						</a>
+                        <a href="#" id="btn_mobile_gnb" class="btn_gnb">
+							<img src="../common/img/icon/header_menu.png" alt="메뉴">
+							<img src="../common/img/icon/header_menu_on.png" alt="메뉴" class="on">
+						</a>
+						<div class="gnb_search_area" id="ativesch">
+							<input id="searchtm" name="searchtm" value=""/>
+							<a href="" class="btn_gnb_search" >
+								<img src="../common/img/icon/header_search.png" alt="검색">
+							</a>
+							<a href="javascript:changeclass('close')" id="btn_mobile_gnb" class="btn_gnb">
+								<img src="../common/img/icon/gnb_close2.png" alt="닫기" >
+							</a>
+						</div>
+                        <div class="gnb_area">
+                            <div class="close_box gnb_right">
+                                <a href="#" class="btn_close"><img src="../common/img/icon/gnb_close.png" alt="닫기"></a>
+                            </div>
+                            <div class="gnb_wrap gnb_right">
+                                <div class="gnb_top mobile">
+                                    <h2 class="logo"><a href="index.php"><img src="../file/profile/sinfo/8bc4a711e24c688437b4163177a60cd8_IMG181120094759.png" alt="제일펫푸드"></a></h2> 
+                                    
+                                    <div class="lang_select">                                       
+                                        <ul class="lang_menu">
+                                            <li><a class="lang_kr active" href="index.php">KO<span class="arrow down"></span></a></li>
+                                            <li><a class="lang_en" href="en/index.php">EN</a></li>                                   
+                                        </ul>
+                                        <a class="lang_active" href="#">KO<span class="arrow"></span></a>
+                                    </div>
+                                    <script>
+                                    //lang_select
+                                    $(".header_bottom .lang_active").click(function() {
+                                        $(".header_bottom .lang_menu").stop(true,true).animate({ top:-11 }, 10);
+                                        return false;
+                                    });
+                                    $(".header_bottom .lang_menu a.active").click(function() {
+                                        $(".header_bottom .lang_menu").stop(true,true).animate({ top:-9999 }, 10);
+                                        return false;
+                                    });
+                                    </script>
+                                </div>
+                                
+                                <div class="gnb_scroll">
+                                    <!-- 모바일 메뉴 -->
+                                    <ul id="gnb">
+                                        <li class="menu ">
+                                            <a href="company/company.php" class="btn_menu">제일펫푸드</a>
+                                            <span class="icon"></span>
+                                            <ul class="sub_menu" style=" ">
+                                                <li><a href="company/company.php">회사개요</a></li>
+                                                <li><a href="company/history.php">회사연혁</a></li>                                                
+                                                <li><a href="company/harim.php">하림중앙연구소</a></li>
+                                                <li><a href="company/group.php">그룹소개</a></li>
+                                                <li><a href="company/brand.php">브랜드</a></li>
+                                                <li><a href="company/location.php">오시는 길</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="menu ">
+                                            <a href="dogs/list_dry.php" class="btn_menu">Dogs</a>
+                                            <span class="icon"></span>
+                                            <ul class="sub_menu" style=" ">
+                                                <li><a href="dogs/list_dry.php">Dry dog food</a></li>
+                                                <li><a href="dogs/list_wet.php">Wet dog food</a></li>
+                                                <li><a href="dogs/list_treats.php">Dog treats</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="menu ">
+                                            <a href="cats/list_dry.php" class="btn_menu">Cats</a>
+                                            <span class="icon"></span>
+                                            <ul class="sub_menu" style=" ">
+                                                <li><a href="cats/list_dry.php">Dry cat food</a></li>
+                                                <li><a href="cats/list_wet.php">Wet cat food</a></li>
+                                                <li><a href="cats/list_treats.php">Cat treats</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="menu active">
+                                            <a href="center/notice.php" class="btn_menu">고객센터</a>
+                                            <span class="icon"></span>
+                                            <ul class="sub_menu" style=" display:block">
+                                                <li><a href="center/notice.html">공지사항</a></li>
+                                                <li><a href="center/faq.php">FAQ</a></li>
+                                                <li><a href="center/qna.php">Q&amp;A</a></li>
+                                                <li><a href="center/sns.php">SNS</a></li>
+                                                <!--<li><a href="center/sample.php">샘플신청</a></li>
+                                                <li><a href="center/coupon.php">쿠폰</a></li>-->
+												<li><a Onclick="alert('준비중입니다')" style="cursor:pointer">샘플신청</a></li>
+                                                <li><a Onclick="alert('준비중입니다')" style="cursor:pointer">쿠폰</a></li>
+                                                <li><a href="center/store.php">판매처 안내</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="menu ">
+                                            <a href="health/pet.php" class="btn_menu">건강정보</a>
+                                            <span class="icon"></span>
+                                            <ul class="sub_menu" style=" ">
+                                                <li><a href="health/pet.php">반려동물 건강</a></li>
+                                                <li><a href="health/material.php">원료 특징</a></li>
+                                            </ul>
+                                        </li>
+                                        
+                                    </ul>
+                                    <!-- //모바일 메뉴 -->                                    
+                                    
+                                </div>
+                                
+                                <div class="gnb_bottom mobile">
+									                                    
+                                    <div class="center_box_wrap">
+										<div class="sns_menu">
+																						<a href="https://ko-kr.facebook.com/jeilpet/" target="_blink" class="btn_sns"><img src="../../common/img/icon/ft_sns_f_m.png" alt="facebook"></a>
+											            
+																						<a href="https://www.instagram.com/idealrecipe/" target="_blink" class="btn_sns"><img src="../../common/img/icon/ft_sns_k_m.png" alt="kakao"></a>
+														
+																						<a href="https://blog.naver.com/jeilpet" target="_blink" class="btn_sns"><img src="../../common/img/icon/ft_sns_b_m.png" alt="blog"></a>
+																						
+										</div>
+                                        <div class="center_box">
+                                        	<a href="company/location.php">CONTACT</a>
+                                            <a href="center/faq.php">자주하는 질문</a>
+                                        </div>
+                                        <p class="copyright">Copyright ⓒ 2018 JEILPET.CO.LTD. All Right Reserved.</p>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>   
+        
+        
+        <!-- 컨텐츠 -->
+        <div id="content" class="sub center_panel bbs_photo">
+            <div class="wrapping">            
+            	<!-- 서브타이틀 -->
+                <div class="partner_top">
+                    <!-- 상단 서브 배너 영역 ---------------------->
+                    <div class="sub_visual">
+	<img src="../../common/img/center/bg_m.jpg" alt="" class="show_mobile"/>
+</div>   
+                    <!-- //상단 서브 배너 영역 ---------------------->  
+                    
+                    <div class="contains">
+                        <div class="lnb_tab_box">
+                            <div class="lnb_tab_menu">
+                                <a href="notice.php" class="btn_tab active">공지사항</a>
+                                <a href="faq.php" class="btn_tab">FAQ</a>
+                                <a href="qna.php" class="btn_tab">Q&amp;A</a>
+                                <a href="sns.php" class="btn_tab">SNS</a>
+                                <a Onclick="alert('준비중입니다')" style="cursor:pointer" class="btn_tab">샘플신청</a>
+                                <a Onclick="alert('준비중입니다')" style="cursor:pointer" class="btn_tab">쿠폰</a>
+                                <a href="store.php" class="btn_tab">판매처 안내</a>
+                            </div>
+                        </div> 
+                        
+                        <div class="show_mobile">
+                            <p class="partner_title"><b>고객센터</b></p>
+                        </div>
+                                               
+                    </div>                                
+				</div>
+                <!-- //서브타이틀 -->   
+                
+                <div class="sub_wrap">
+                	<div class="contains"> 
+                    	<div class="sub_title_box">
+                            <p class="title">공지사항</p>
+                        </div>
+                        <div class="bbs_title">                            
+                            <div class="bbs_right">
+                                <div class="select_box select_qna">
+                                    <select class="select" name="b_news_yn" id="b_end_yn" onChange="categoryList(this.value)">
+                                        <option value="" selected>전체</option>
+                                       <option value="394" >뉴스</option><option value="395" >공지</option>                                    </select>
+                                    <a href="#" class="btn_select"></a>
+                                </div>
+                            </div>
+                        </div>
+                                                               
+                        <div class="notice_wrap">
+                            <!-- 리스트-->
+                            <div class="news_area">
+                        	<div class="news_slide">
+								
+                                <div class="list_box">
+
+									                                    <a href="javascript:;" onClick="viewNotice('7087','THUM_NTC_0', '','');" class="btn_menu">
+                                    
+									                                        <img src="../file/board/thum_ntc_0/205e360c76328ccedc0e13d037bc8d09_IMG181005163956.jpg" alt="">
+																			<span class="title">[공지]제일펫푸드 홈페이지 리뉴얼</span>
+                                        <span class="date">2019.03.01</span> 
+                                        <span class="tag">
+											                                        			<span class="tag_box">#오픈</span>                                            
+											                                        			<span class="tag_box"># 리뉴얼</span>                                            
+											                                        			<span class="tag_box"># 제일펫푸드</span>                                            
+											                                        </span>                      
+                                    </a>
+
+									                                    
+									
+									
+                                </div>
+                                
+							
+                                <div class="list_box">
+
+									                                    <a href="javascript:;" onClick="viewNotice('7151','THUM_NTC_0', '','');" class="btn_menu">
+                                    
+									                                        <img src="../file/board/thum_ntc_0/c139eb443461f997e4aa7d0ad916db94_IMG181026125150.jpg" alt="">
+																			<span class="title">[뉴스]캣맘들을 위한 원더풀한 제안</span>
+                                        <span class="date">2019.01.01</span> 
+                                        <span class="tag">
+											                                        			<span class="tag_box">#캣맘</span>                                            
+											                                        			<span class="tag_box"># 원더풀</span>                                            
+											                                        			<span class="tag_box"># 원더캣츠</span>                                            
+											                                        </span>                      
+                                    </a>
+
+									                                    
+									
+									
+                                </div>
+                                
+							
+                                <div class="list_box">
+
+									                                    <a href="javascript:;" onClick="viewNotice('7052','THUM_NTC_0', '','');" class="btn_menu">
+                                    
+									                                        <img src="../file/board/thum_ntc_0/432333b37742d71bbfb928cfdd91d30b_IMG181005163856.jpg" alt="">
+																			<span class="title">[뉴스]활력을 주세요~ 크레이지 파워!</span>
+                                        <span class="date">2018.12.25</span> 
+                                        <span class="tag">
+											                                        			<span class="tag_box">#IR</span>                                            
+											                                        			<span class="tag_box"># 아이디얼레시피</span>                                            
+											                                        			<span class="tag_box"># LID</span>                                            
+											                                        </span>                      
+                                    </a>
+
+									                                    
+									
+									
+                                </div>
+                                
+							
+                                <div class="list_box">
+
+									                                    <a href="javascript:;" onClick="viewNotice('6991','THUM_NTC_0', '','');" class="btn_menu">
+                                    
+									                                        <img src="../file/board/thum_ntc_0/6f275532d3b4705e709bf9436877f68c_IMG181005163830.jpg" alt="">
+																			<span class="title">[뉴스]고양이~고양이~ 슈슈캣</span>
+                                        <span class="date">2018.10.01</span> 
+                                        <span class="tag">
+											                                        			<span class="tag_box">#제일펫푸드</span>                                            
+											                                        			<span class="tag_box"># 슈슈</span>                                            
+											                                        			<span class="tag_box"># 고양이</span>                                            
+											                                        </span>                      
+                                    </a>
+
+									                                    
+									
+									
+                                </div>
+                                
+							
+                                <div class="list_box">
+
+									                                    <a href="javascript:;" onClick="viewNotice('6978','THUM_NTC_0', '','');" class="btn_menu">
+                                    
+									                                        <img src="../file/board/thum_ntc_0/de0a53f822e807912462948afe904a78_IMG181005163812.jpg" alt="">
+																			<span class="title">[뉴스]반려견에게도 슈퍼푸드를?!?</span>
+                                        <span class="date">2018.08.01</span> 
+                                        <span class="tag">
+											                                        			<span class="tag_box">#슈퍼푸드</span>                                            
+											                                        			<span class="tag_box">#슈슈</span>                                            
+											                                        			<span class="tag_box">#제일펫푸드</span>                                            
+											                                        </span>                      
+                                    </a>
+
+									                                    
+									
+									
+                                </div>
+                                
+							                            </div>
+                        
+                        </div>                      
+                            
+                            <!-- 페이징 -->
+                            <div class="page_list">	<a href="javascript:;" class="btn_first"><span>처음</span></a>
+<a href="#" class="btn_page active">1</a> <a href="javascript:;" class="btn_last"><span>마지막</span></a>
+ </ul>
+ </div>
+                            
+                            <!-- 검색 -->
+                            <script>
+function slist(){
+    
+    f = document.sform;
+    f.action = searchUrl;
+    f.submit();
+}
+</script>
+<form name="sform" id="sform">
+                            <div class="form_table">
+                                <div class="search_box">
+                                    <div class="select_box">
+                                        <select class="select" id="subtitle" name="subtitle">
+                                            <option value="T" >제목</option>
+                                            <option value="C" >내용</option>
+                                        </select>
+                                        <a href="#" class="btn_select"></a>
+                                    </div>
+                                    <input type="text" name="searchText" id="searchText" class="input_text phone_01" value="">
+                                    <a href="javascript:slist();" class="btn2 btn_black">검색</a>
+                                </div>
+                            </div>
+                        </form>                              
+                        </div>                    
+                    </div>                    
+                </div>
+                
+                
+                <!-- 서브 도움 배너 -->
+                <div class="partner_help">
+                    <div class="contains">
+                        <ul class="help_list">
+                            
+                            <li class="help_01 page_animate">
+                                								<a href="http://170.170.103.67/center/notice.php"  >
+								<img src="../file/banner/help/0a6450e288a4c848a30cb3478bbce76c_IMG180927022628.jpg" alt="test2"/>
+                                </a><!--도움배너 1-->
+								                                	
+                            </li>                            
+							
+                            <li class="help_01 page_animate">
+                                								<a href="center/faq.php"  >
+								<img src="../file/banner/help/74b859ec74391eea08a5b0fb13de067b_IMG180927022710.jpg" alt="test1"/>
+                                </a><!--도움배너 1-->
+								                                	
+                            </li>                            
+							                            
+                        </ul>
+                    </div>
+                </div>                <!-- //서브 도움 배너 -->
+                
+        	</div>
+        </div>
+        <!-- //컨텐츠 -->
+        
+        <!-- 푸터 -->
+        <div id="footer">
+            <div class="contains">
+                <div class="footer_top clear_wrap">
+                    <ul class="footer_menu">
+                        <!--<li><a href="etc/privacy.php?l_useterms=A">개인정보정책</a></li>
+                        <li><a href="etc/privacy.php?l_useterms=B">이용약관</a></li>
+                        <li><a href="etc/privacy.php?l_useterms=C">이메일무단수집거부</a></li>-->
+                        <li class="pc"><a href="etc/sitemap.php">사이트맵</a></li>
+						<li><a href="https://eorder.jeilfeed.co.kr" target="_blank">천하제일사료거래실적</a></li>
+                    </ul>
+                    <div class="right_menu">
+                        <div class="drop_family">
+                            <span class="icon"></span>
+                            <a href="#" class="btn_family">패밀리 사이트</a>
+                            <ul class="drop_list">
+                            	<li><a href="https://www.jeilfeed.co.kr/" target="_blank" class="btn_menu">천하제일사료</a></li>
+								<li><a href="http://www.harim.com/main.hr" target="_blank" class="btn_menu">(주)하림</a></li>
+								<li><a href="http://www.nseshop.com/" target="_blank" class="btn_menu">(주)엔에스쇼핑</a></li>
+								<li><a href="http://www.orpum.co.kr/" target="_blank" class="btn_menu">(주)올품</a></li>
+								<li><a href="http://www.thumbvet.co.kr/" target="_blank" class="btn_menu">한국썸벧(주)</a></li>
+								<li><a href="http://www.ddck.co.kr/main.jsp" target="_blank" class="btn_menu">(주)DD F&B</a></li>
+								<li><a href="http://www.orimart.co.kr/shop/main/index.php" target="_blank" class="btn_menu">(농)㈜주원산오리 </a></li>
+								<li><a href="http://www.panocean.com/ko" target="_blank" class="btn_menu">펜오션</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer_bottom">
+					<div class="contains">
+						<div class="address_box">
+							<p><img src="../file/profile/sinfo/d009f44beecdb041864f15f8a9c26aad_IMG181005030830.png" alt=""/></p>
+							<p>서울시 강남구 도산대로 130 하림빌딩 7층(537-10) jeilpet.kr@gmail.com<br class="show_mobile"/><span class="tel">대표전화 : <a href="tel:02-2086-3520"><b>02-2086-3520</b></a></span></p>
+							<p class="copyright">Copyright ⓒ 2018 JEILPET.CO.LTD. All Right Reserved.</p>
+						</div>
+
+												<a href="https://ko-kr.facebook.com/jeilpet/" target="_blink"  class="footer_sns_01">facebook</a>
+																		<a href="https://www.instagram.com/idealrecipe/" target="_blink"  class="footer_sns_02">insta</a>
+									
+												<a href="https://blog.naver.com/jeilpet" target="_blink"  class="footer_sns_03">blog</a>
+						
+					</div>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <a href="#" id="page_top" style="margin-bottom: 0px;" class="active"><img src="../common/img/icon/page_top.png" alt="위로"></a>        
+	</div>
+    
+    <!-- 팝업 -->
+    <div id="popup_mask"></div>
+
+<!-- body끝 -->
+</body>
+</html> 
