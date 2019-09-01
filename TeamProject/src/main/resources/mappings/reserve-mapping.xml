@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ReserveDAO">
+	<select id="getReserveVO" parameterType="int" resultType="reserve">
+	<![CDATA[
+		SELECT * FROM RYOKAN_RESERVES WHERE RE_CODE=#{re_code}
+	]]>
+	</select>
+
+	<select id="getReserveAllList" resultType="reserve">
+	<![CDATA[
+		SELECT * FROM RYOKAN_RESERVES
+	]]>
+	</select>
+	
+	<select id="getRoomReservedList" resultType="reserve" parameterType="int">
+	<![CDATA[
+		SELECT * FROM RYOKAN_RESERVES WHERE R_CODE=#{r_code}
+	]]> 
+	</select>
+
+	<insert id="insertReserve" parameterType="reserve">
+	<![CDATA[
+		INSERT INTO RYOKAN_RESERVES(RE_CODE,MBER_ID,CHECK_IN,CHECK_OUT,NUM_PEOPLE,R_CODE,M_CODE,PAY_CODE,RE_MEMO)
+									     VALUES(re_seq.nextval,#{mber_id},#{check_in},#{check_out},#{num_people},#{r_code},#{m_code},pay_seq.nextval,#{re_memo})
+	]]>
+	</insert>
+	
+	<delete id="deleteReserve" parameterType="int">
+	<![CDATA[
+		DELETE FROM RYOKAN_RESERVES WHERE RE_CODE=#{re_code}
+	]]>
+	</delete>
+	
+	<update id="updateReserveStatus" parameterType="map">
+	<![CDATA[
+		UPDATE RYOKAN_RESERVES SET RE_STATUS = #{re_status} WHERE RE_CODE=#{re_code}
+	]]>
+	</update>
+	
+	<select id="getReserveViewList" resultType="reserveView" parameterType="cri">
+	<![CDATA[
+		SELECT * FROM(SELECT ROWNUM R, RE_CODE, R_TITLE,B.MBER_ID,NM_FIRST,NM_LAST,NUM_PEOPLE,RE_DATE,
+				 					CHECK_IN,CHECK_OUT,PAY_PRICE,PAY_WAY,RE_STATUS
+							 FROM RYOKAN_MEMBERS A, RYOKAN_RESERVES B,RYOKAN_ROOMS C,RYOKAN_PAYS D
+							 WHERE B.MBER_ID = A.MBER_ID AND B.R_CODE = C.R_CODE AND B.PAY_CODE=D.PAY_CODE)
+		WHERE R BETWEEN #{page}*#{perPageNum}-9 AND #{page}*#{perPageNum}
+	]]>
+	</select>
+	
+	<select id="getReserveTotalRecord" resultType="int">
+	<![CDATA[
+		SELECT COUNT(*) FROM RYOKAN_RESERVES
+	]]>
+	</select>
+	
+	<select id="getSearchReserveViewList" resultType="reserveView" parameterType="String">
+	<![CDATA[
+		SELECT RE_CODE, R_TITLE,B.MBER_ID,NM_FIRST,NM_LAST,NUM_PEOPLE,RE_DATE,CHECK_IN,CHECK_OUT,PAY_PRICE,PAY_WAY,RE_STATUS
+		FROM RYOKAN_MEMBERS A, RYOKAN_RESERVES B, RYOKAN_ROOMS C, RYOKAN_PAYS D
+		WHERE B.MBER_ID = A.MBER_ID 
+			AND B.R_CODE = C.R_CODE 
+			AND B.PAY_CODE=D.PAY_CODE 
+			AND B.MBER_ID LIKE '%'||#{search_id}||'%'
+	]]>
+	</select>
+	
+	
+	
+</mapper>

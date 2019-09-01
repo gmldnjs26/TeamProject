@@ -5,7 +5,17 @@
 	<!--  데이터소스는 이미 스프링 프레임워크에서 등록해서 사용하고있다. -->
 	<!-- Alias 설정 -->
 	<typeAliases>
-	
+		<typeAlias alias="member" type="com.jsl.team.dto.MemberVO"/>
+		<typeAlias alias="cri" type="com.jsl.team.paging.CriteriaVO"/>
+		<typeAlias alias="reserve" type="com.jsl.team.dto.ReserveVO"/>
+		<typeAlias alias="room" type="com.jsl.team.dto.RoomVO"/>
+		<typeAlias alias="reserveView" type="com.jsl.team.dto.ReserveViewVO"/>
+		<typeAlias alias="meal" type="com.jsl.team.dto.MealVO" />
+		<typeAlias alias="qna" type="com.jsl.team.dto.QnaVO"/>
+		<typeAlias alias="pay" type="com.jsl.team.dto.PaymentVO"/>
+		<typeAlias alias="reserveinfo" type="com.jsl.team.dto.ReserveInfoVO"/>
+		<typeAlias alias="spa_in" type="com.jsl.team.dto.SpaInVO"/>
+		<typeAlias alias="spa_out" type="com.jsl.team.dto.SpaOutVO"/>
 	</typeAliases>
 	
 	<!--  DataSource 설정 
@@ -23,7 +33,13 @@
 	
 	<!--  Sql Mapper 설정 -->
 	<mappers>
-
+		<mapper resource="mappings/member-mapping.xml" />
+		<mapper resource="mappings/reserve-mapping.xml" />
+		<mapper resource="mappings/room-mapping.xml" />
+		<mapper resource="mappings/meal-mapping.xml" />
+		<mapper resource="mappings/qna-mapping.xml"/>
+		<mapper resource="mappings/payment-mapping.xml"/>
+		<mapper resource="mappings/spa-mapping.xml" />
 	</mappers>
 	
 </configuration>
