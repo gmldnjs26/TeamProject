@@ -1,5 +1,3 @@
-
-//---------------------------------------
 $(function() {
     page.init();
 });
@@ -34,8 +32,8 @@ var page = {
                 if(!headerTop.is(":visible")) return;
                 clearTimeout(headerInterval);
                 headerInterval = setTimeout(function() {
-                    headerGnb.stop(true,true).animate({ height:370 }, 300);
-                    headerBottom.stop(true,true).addClass("hover").animate({ height:370 }, 300, function() {
+                    headerGnb.stop(true,true).animate({ height:400 }, 300);
+                    headerBottom.stop(true,true).addClass("hover").animate({ height:400 }, 300, function() {
                         headerBottom.addClass("hover");
                     });
                 }, 100);
@@ -63,8 +61,8 @@ var page = {
         );
         $("#gnb").on("focusin", function() {
             if(!headerTop.is(":visible")) return;
-            headerGnb.stop(true,true).height(310);
-            headerBottom.stop(true,true).height(310);
+            headerGnb.stop(true,true).height(400);
+            headerBottom.stop(true,true).height(400);
         }).on("focusout", function() {
             if(!headerTop.is(":visible")) return;
             headerGnb.stop(true,true).height(69);
@@ -321,21 +319,38 @@ var page = {
             }
         });
 		
-		$("#main_visual .bg_cover").each(function() {
+		$(".main_visual .bg_cover").each(function() {
 			$(this).css("backgroundImage","url(" + $(this).children(".bg").attr("src") + ")");
 		});		
 		
-		if($("#main_visual").length == 0) return;
+		if($(".main_visual").length == 0) return;
         
-        var mainSlideOpt = {
-            autoplay:true,            
-            speed:500,
-            autoplaySpeed:5000,
-            prevArrow:"#main_visual .btn_slide.prev",
-            nextArrow:"#main_visual .btn_slide.next",
-            dots:true,
-            dotsClass:"slide_thumb"
-        }
+
+/*    	var mainSlideOpt = {
+	            autoplay:true,            
+	            speed:500,
+	            autoplaySpeed:5000,
+	            prevArrow:"#main_visual .btn_slide.prev",
+	            nextArrow:"#main_visual .btn_slide.next",
+	            dots:true,
+	            dotsClass:"slide_thumb"
+	        }   */     	
+    	
+
+
+    			mainSlideOpt = {
+    		            autoplay:true,            
+    		            speed:500,
+    		            autoplaySpeed:5000,
+    		            prevArrow:".main_visual .btn_slide.prev",
+    		            nextArrow:".main_visual .btn_slide.next",
+    		            dots:true,
+    		            dotsClass:"slide_thumb"
+    		        }
+
+
+    		
+
         
         if($("#viewport.main").length > 0) {
             mainSlideOpt.autoplay = false;
@@ -349,8 +364,10 @@ var page = {
                 if(videoIdx > -1 && videoObject[videoIdx] != undefined) {
                     videoObject[videoIdx].data('ytPlayer').player.stopVideo();
                 }
+                var checkMobile = $(".main_visual .list_box .img_box.mobile").eq(0).is(":visible");
                 
-                var checkMobile = $("#main_visual .list_box .img_box.mobile").eq(0).is(":visible");
+                
+                
                 if($(target).hasClass("slide_video") && checkMobile === false) {
                     //영상 
                     if(videoObject[idx] == undefined) {
@@ -377,7 +394,7 @@ var page = {
                                     }
                                     else if(state.data === 0) {
                                         //영상 재생 끝
-                                        $("#main_visual .visual_slide").slick("slickNext");
+                                        $(".main_visual .visual_slide").slick("slickNext");
                                     }
                                 });
                             }
@@ -391,19 +408,19 @@ var page = {
                 else {
                     //이미지 
                     slideInterval = setTimeout(function() {
-                        $("#main_visual .visual_slide").slick("slickNext");
+                        $(".main_visual .visual_slide").slick("slickNext");
                     }, slideDelay);
                 }
             }
-            $("#main_visual").on("mouseenter", ".list_box:not(.slide_video)", function() {
+            $(".main_visual").on("mouseenter", ".list_box:not(.slide_video)", function() {
                 clearTimeout(slideInterval);
             }).on("mouseleave", ".list_box:not(.slide_video)", function() {
                 slideInterval = setTimeout(function() {
-                    $("#main_visual .visual_slide").slick("slickNext");
+                    $(".main_visual .visual_slide").slick("slickNext");
                 }, slideDelay - 1000);
             });
             
-            $("#main_visual .visual_slide").on("init", function(event, slick) {
+            $(".main_visual .visual_slide").on("init", function(event, slick) {
                 var getSlide = $(slick.$slides.get(0));
                 mainVideo(getSlide,0);
             }).on("beforeChange", function(event, slick, currentSlide, nextSlide){
@@ -411,9 +428,11 @@ var page = {
                 mainVideo(getSlide,nextSlide);
             });
         }
-        
-        var mainVisual = $("#main_visual");
-        var mainVisualSlide = $("#main_visual .visual_slide").slick(mainSlideOpt);
+       
+        var mainVisual = $(".main_visual");
+        var mainVisualSlide = $(".main_visual .visual_slide").slick(mainSlideOpt);
+    	
+    	
         
         var mainNewSlide = $(".main_news .news_slide").slick({
             speed:500,
@@ -754,7 +773,7 @@ var page = {
             $("#viewport").addClass("move_title");
             $("#header .header_bottom .gnb_box > .contains").append($(".partner_top .partner_title").clone());
         }
-        if($("#main_visual").length > 0) {
+        if($(".main_visual").length > 0) {
             $("#viewport").addClass("sub_visual");
         }
 		
@@ -765,8 +784,8 @@ var page = {
             $(".sub .lnb_tab_menu").wrap("<div class='lnb_tab_wrap'><div class='lnb_tab_contains'></div></div>");
             
             var lnbTabBox = $(".sub .lnb_tab_box");
-            if($("#main_visual").length > 0) {
-                $("<div class='contains'><div class='lnb_tab_box mobile'>" + lnbTabBox.html() + "</div></div>").insertAfter($("#main_visual"));
+            if($(".main_visual").length > 0) {
+                $("<div class='contains'><div class='lnb_tab_box mobile'>" + lnbTabBox.html() + "</div></div>").insertAfter($(".main_visual"));
                 lnbTabBox.addClass("pc");
             }
             else {

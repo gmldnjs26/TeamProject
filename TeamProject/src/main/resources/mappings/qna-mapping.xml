@@ -1,23 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="QnaDAO">
-	<select id="getQnaList" resultType="qna" parameterType="user">
-		<![CDATA[
-			SELECT * FROM QNA WHERE ID=#{id}
-		]]>
+	<select id="getQnaList" resultType="qna" parameterType="cri">
+	<![CDATA[
+		SELECT * FROM (SELECT ROWNUM R, A.*
+							  FROM RYOKAN_QNAS A
+							  ORDER BY A.Q_CODE DESC) 
+		WHERE R BETWEEN #{page}*#{perPageNum}-9 AND #{page}*#{perPageNum}
+	]]>
+	</select>
+	<!-- 방금 등록한 질문 부터 뽑아서 답변해주기위해 정렬 이렇게함(뒤에서 부터 뽑는개념) -->
+	
+	<select id="getLoginMemberQnaList" resultType="qna" parameterType="String">
+	<![CDATA[
+		SELECT * FROM RYOKAN_QNAS WHERE MBER_ID=#{mber_id}
+	]]>
 	</select>
 	
-	<select id="getQna" resultType="qna" parameterType="qna">
-		<![CDATA[
-			SELECT * FROM QNA WHERE QSEQ=#{qseq}
-		]]>
+	<select id="getQnaDetail" resultType="qna" parameterType="int">
+	<![CDATA[
+		SELECT * FROM RYOKAN_QNAS WHERE Q_CODE=#{q_code}
+	]]>
 	</select>
 	
-	<insert id="insertQna" parameterType="qna">
-		<![CDATA[
-			INSERT INTO QNA(QSEQ,SUBJECT,CONTENT,ID)
-			VALUES(qna_seq.nextval,#{subject},#{content},#{id})
-		]]>
+	<select id="getSearchQnaList" resultType="qna" parameterType="String">
+	<![CDATA[
+		SELECT * FROM RYOKAN_QNAS WHERE Q_TITLE LIKE '%'||#{q_title}||'%'
+	]]>
+	</select>
+	
+	<select id="getQnaTotalRecord" resultType="int">
+	<![CDATA[
+		SELECT COUNT(*) FROM RYOKAN_QNAS 
+	]]>
+	</select>
+	
+	<insert id="insertQna" parameterType="qna" > 
+	<![CDATA[
+		INSERT INTO RYOKAN_QNAS(Q_CODE,MBER_ID,Q_TITLE,Q_CONTENT,A_TITLE,A_CONTENT)
+									VALUES(qna_seq.nextval,#{mber_id},#{q_title},#{q_content},#{a_title},#{a_content})
+	]]>
 	</insert>
-
+	
+	<delete id="deleteQna" parameterType="int">
+	<![CDATA[
+		DELETE FROM RYOKAN_QNAS WHERE Q_CODE=#{q_code}
+	]]>
+	</delete>
+	
+	<update id="repWrite" parameterType="qna">
+	<![CDATA[
+		UPDATE RYOKAN_QNAS
+		SET A_TITLE=#{a_title}, A_CONTENT=#{a_content}, Q_STATUS=1
+		WHERE Q_CODE = #{q_code}
+	]]>	
+	</update>
+	
 </mapper>

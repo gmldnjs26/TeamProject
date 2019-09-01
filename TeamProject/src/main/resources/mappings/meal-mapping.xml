@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MealDAO">
+	<select id="getMeal" resultType="meal" parameterType="int">
+	<![CDATA[
+		SELECT * FROM RYOKAN_MEALS WHERE M_CODE=#{m_code}
+	]]>
+	</select>
+	
+	<select id="getMealList" resultType="meal">
+	<![CDATA[
+		SELECT * FROM RYOKAN_MEALS 
+	]]>
+	</select>
+	
+</mapper>
